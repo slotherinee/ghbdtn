@@ -19,17 +19,6 @@ jobs:
       - name: Select Xcode
         run: sudo xcode-select -s /Applications/Xcode.app
 
-      - name: Generate app icon
-        run: |
-          swift ghbdtn/ghbdtn/make_icons.swift 2>/dev/null || true
-          ICONSET="/tmp/ghbdtn.iconset"
-          mkdir -p "$ICONSET"
-          for f in 16 32 128 256 512; do
-            cp /tmp/ghbdtn_iconset/icon_${f}x${f}.png    "$ICONSET/icon_${f}x${f}.png"
-            cp /tmp/ghbdtn_iconset/icon_${f}x${f}@2x.png "$ICONSET/icon_${f}x${f}@2x.png"
-          done
-          iconutil -c icns "$ICONSET" -o ghbdtn/ghbdtn/ghbdtn/AppIcon.icns
-
       - name: Build
         run: |
           xcodebuild \
