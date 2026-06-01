@@ -31,6 +31,11 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             | xcpretty || true
 
+      - name: Ad-hoc sign
+        run: |
+          APP="build/Build/Products/Release/ghbdtn.app"
+          codesign --force --deep --sign - "$APP"
+
       - name: Create DMG
         run: |
           APP="build/Build/Products/Release/ghbdtn.app"

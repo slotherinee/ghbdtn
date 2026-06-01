@@ -16,8 +16,12 @@
 
 Открой [Releases](../../releases) → скачай последний `ghbdtn-vX.X.X.dmg` → перетащи `ghbdtn.app` в папку **Программы**.
 
-> **Если macOS пишет «Не удалось открыть»:**
-> Системные настройки → Конфиденциальность и безопасность → пролистай вниз → нажми **«Всё равно открыть»**
+> **Если macOS пишет «Не удалось открыть» или «повреждено»:**
+> Открой Терминал и выполни:
+> ```bash
+> xattr -cr /Applications/ghbdtn.app
+> ```
+> Затем запусти приложение снова. Или: Системные настройки → Конфиденциальность и безопасность → пролистай вниз → **«Всё равно открыть»**
 
 ### Собрать из исходников
 
@@ -56,6 +60,10 @@ A macOS menu bar app that translates text typed in the wrong keyboard layout —
 
 **Install:** Download the `.dmg` from [Releases](../../releases) or clone and build in Xcode.
 
-> **If macOS says it can't be opened:** System Settings → Privacy & Security → scroll down → **"Open Anyway"**
+> **If macOS says it's "damaged" or can't be opened:** open Terminal and run:
+> ```bash
+> xattr -cr /Applications/ghbdtn.app
+> ```
+> Then launch again. Or: System Settings → Privacy & Security → scroll down → **"Open Anyway"**
 
 **Requirements:** macOS 13+, at least 2 keyboard layouts installed.
