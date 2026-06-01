@@ -64,6 +64,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        UserDefaults.standard.register(defaults: ["switchLayoutAfterTranslation": true])
         setupMenuBar()
         NotificationCenter.default.addObserver(self, selector: #selector(reloadHotkey), name: .hotkeyConfigChanged, object: nil)
 
