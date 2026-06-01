@@ -10,7 +10,7 @@ class SettingsWindowController: NSWindowController, NSWindowDelegate {
 
     convenience init() {
         let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 400, height: 230),
+            contentRect: NSRect(x: 0, y: 0, width: 400, height: 252),
             styleMask: [.titled, .closable],
             backing: .buffered,
             defer: false
@@ -59,9 +59,37 @@ class SettingsWindowController: NSWindowController, NSWindowDelegate {
             L("hotkey.doubleOption"),
             L("hotkey.optionSpace")
         ])
+        hotkeyTypePopup.target = self
+        hotkeyTypePopup.action = #selector(hotkeyTypeChanged)
         cv.addSubview(hotkeyTypePopup)
-        y += 38
+        y += 32
+
+        // Hint: "Выдели текст и нажми …"
+        let hintLabel = NSTextField(labelWithString: "")
+        hintLabel.frame = NSRect(x: 16, y: y, width: 368, height: 16)
+        hintLabel.font = NSFont.systemFont(ofSize: 11)
+        hintLabel.textColor = .secondaryLabelColor
+        hintLabel.tag = 77
+        cv.addSubview(hintLabel)
+        y += 22
+
         addSectionHeader(L("settings.section.hotkey"), to: cv, y: y)
+    }
+
+    @objc private func hotkeyTypeChanged() {
+        updateHotkeyHint()
+    }
+
+    private func updateHotkeyHint() {
+        guard let hintLabel = window?.contentView?.viewWithTag(77) as? NSTextField else { return }
+        let idx = hotkeyTypePopup.indexOfSelectedItem
+        let combo: String
+        switch idx {
+        case 1: combo = L("hotkey.doubleOption")
+        case 2: combo = "⌥ Space"
+        default: combo = L("hotkey.doubleControl")
+        }
+        hintLabel.stringValue = L("settings.hotkey.hint") + " " + combo
     }
 
     // MARK: - Helpers
@@ -97,6 +125,7 @@ class SettingsWindowController: NSWindowController, NSWindowDelegate {
         case .doubleTapOption:  hotkeyTypePopup.selectItem(at: 1)
         case .optionSpace:      hotkeyTypePopup.selectItem(at: 2)
         }
+        updateHotkeyHint()
     }
 
     // MARK: - Launch at Login

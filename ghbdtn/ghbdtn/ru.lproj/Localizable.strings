@@ -38,6 +38,7 @@
 "button.save" = "Сохранить";
 "settings.section.hotkey" = "Горячая клавиша";
 "settings.hotkey.trigger" = "Сочетание:";
+"settings.hotkey.hint" = "Выдели текст и нажми";
 "hotkey.doubleControl" = "Двойной ⌃ Control";
 "hotkey.doubleOption" = "Двойной ⌥ Option";
 "hotkey.optionSpace" = "⌥ Option + Пробел";
