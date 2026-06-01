@@ -39,8 +39,8 @@
 "settings.section.hotkey" = "Горячая клавиша";
 "settings.hotkey.trigger" = "Сочетание:";
 "hotkey.doubleControl" = "Двойной ⌃ Control";
+"hotkey.doubleOption" = "Двойной ⌥ Option";
 "hotkey.optionSpace" = "⌥ Option + Пробел";
-"hotkey.custom" = "Другое…";
 "recorder.recording" = "Нажмите сочетание…";
 "settings.section.toggleMode" = "Режим переключения";
 "settings.mode.label" = "Режим:";

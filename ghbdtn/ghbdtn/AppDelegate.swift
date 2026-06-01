@@ -5,31 +5,20 @@ import CoreGraphics
 // MARK: - Hotkey Config
 
 struct HotkeyConfig {
-    enum Kind {
-        case doubleTapControl
-        case combo(keyCode: CGKeyCode, modifiers: CGEventFlags)
+    enum Kind: String {
+        case doubleTapControl = "double_control"
+        case doubleTapOption  = "double_option"
+        case optionSpace      = "option_space"
     }
     var kind: Kind
 
     static func load() -> HotkeyConfig {
-        let type = UserDefaults.standard.string(forKey: "hotkeyType") ?? "double_control"
-        if type == "double_control" {
-            return HotkeyConfig(kind: .doubleTapControl)
-        }
-        let kc = CGKeyCode(UserDefaults.standard.integer(forKey: "hotkeyKeyCode"))
-        let rawMods = UInt64(bitPattern: Int64(UserDefaults.standard.integer(forKey: "hotkeyModifiers")))
-        return HotkeyConfig(kind: .combo(keyCode: kc, modifiers: CGEventFlags(rawValue: rawMods)))
+        let raw = UserDefaults.standard.string(forKey: "hotkeyType") ?? Kind.doubleTapControl.rawValue
+        return HotkeyConfig(kind: Kind(rawValue: raw) ?? .doubleTapControl)
     }
 
     func save() {
-        switch kind {
-        case .doubleTapControl:
-            UserDefaults.standard.set("double_control", forKey: "hotkeyType")
-        case .combo(let kc, let mods):
-            UserDefaults.standard.set("combo", forKey: "hotkeyType")
-            UserDefaults.standard.set(Int(kc), forKey: "hotkeyKeyCode")
-            UserDefaults.standard.set(Int64(bitPattern: mods.rawValue), forKey: "hotkeyModifiers")
-        }
+        UserDefaults.standard.set(kind.rawValue, forKey: "hotkeyType")
     }
 }
 
@@ -48,9 +37,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var onboardingWindowController: OnboardingWindowController?
     private var hotkeyConfig = HotkeyConfig.load()
 
-    // Double-tap state
-    private var ctrlLastPressTime: TimeInterval = 0
-    private var ctrlIsDown = false
+    // Double-tap state (shared for Control and Option)
+    private var doubleTapLastPressTime: TimeInterval = 0
+    private var doubleTapModIsDown = false
 
     // Prevent concurrent translations
     private var isTranslating = false
@@ -229,11 +218,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func installEventTap() {
         var mask: CGEventMask = 0
         switch hotkeyConfig.kind {
-        case .doubleTapControl:
+        case .doubleTapControl, .doubleTapOption:
             mask = 1 << CGEventType.flagsChanged.rawValue
-        case .combo:
+        case .optionSpace:
             mask = 1 << CGEventType.keyDown.rawValue
         }
+        doubleTapLastPressTime = 0
+        doubleTapModIsDown = false
 
         guard let tap = CGEvent.tapCreate(
             tap: .cgSessionEventTap,
@@ -269,42 +260,41 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func handleEvent(type: CGEventType, event: CGEvent) -> Unmanaged<CGEvent>? {
         switch hotkeyConfig.kind {
         case .doubleTapControl:
-            return handleDoubleTap(type: type, event: event)
-        case .combo(let keyCode, let mods):
-            return handleCombo(keyCode: keyCode, mods: mods, type: type, event: event)
+            return handleDoubleTap(type: type, event: event, watchFlag: .maskControl)
+        case .doubleTapOption:
+            return handleDoubleTap(type: type, event: event, watchFlag: .maskAlternate)
+        case .optionSpace:
+            return handleOptionSpace(type: type, event: event)
         }
     }
 
-    private func handleDoubleTap(type: CGEventType, event: CGEvent) -> Unmanaged<CGEvent>? {
+    private func handleDoubleTap(type: CGEventType, event: CGEvent, watchFlag: CGEventFlags) -> Unmanaged<CGEvent>? {
         guard type == .flagsChanged else { return Unmanaged.passRetained(event) }
-        let flags = event.flags
-        let ctrlNow = flags.contains(.maskControl)
+        let modNow = event.flags.contains(watchFlag)
 
-        if ctrlNow && !ctrlIsDown {
+        if modNow && !doubleTapModIsDown {
             let now = ProcessInfo.processInfo.systemUptime
-            if now - ctrlLastPressTime < 0.4 {
-                ctrlLastPressTime = 0
+            if now - doubleTapLastPressTime < 0.4 {
+                doubleTapLastPressTime = 0
                 DispatchQueue.main.async { [weak self] in self?.performLayoutTranslation() }
             } else {
-                ctrlLastPressTime = now
+                doubleTapLastPressTime = now
             }
-            ctrlIsDown = true
-        } else if !ctrlNow && ctrlIsDown {
-            ctrlIsDown = false
+            doubleTapModIsDown = true
+        } else if !modNow && doubleTapModIsDown {
+            doubleTapModIsDown = false
         }
 
         return Unmanaged.passRetained(event)
     }
 
-    private func handleCombo(keyCode: CGKeyCode, mods: CGEventFlags, type: CGEventType, event: CGEvent) -> Unmanaged<CGEvent>? {
+    private func handleOptionSpace(type: CGEventType, event: CGEvent) -> Unmanaged<CGEvent>? {
         guard type == .keyDown else { return Unmanaged.passRetained(event) }
-
-        let evKC = CGKeyCode(event.getIntegerValueField(.keyboardEventKeycode))
+        let kc = CGKeyCode(event.getIntegerValueField(.keyboardEventKeycode))
         let modMask: CGEventFlags = [.maskCommand, .maskAlternate, .maskControl, .maskShift]
-        guard evKC == keyCode && event.flags.intersection(modMask) == mods.intersection(modMask) else {
+        guard kc == 49 && event.flags.intersection(modMask) == .maskAlternate else {
             return Unmanaged.passRetained(event)
         }
-
         DispatchQueue.main.async { [weak self] in self?.performLayoutTranslation() }
         return nil
     }

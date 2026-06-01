@@ -39,8 +39,8 @@
 "settings.section.hotkey" = "Hotkey";
 "settings.hotkey.trigger" = "Trigger:";
 "hotkey.doubleControl" = "Double ⌃ Control";
+"hotkey.doubleOption" = "Double ⌥ Option";
 "hotkey.optionSpace" = "⌥ Option + Space";
-"hotkey.custom" = "Custom…";
 "recorder.recording" = "Press shortcut…";
 "settings.section.toggleMode" = "Toggle Mode";
 "settings.mode.label" = "Mode:";
