@@ -52,3 +52,4 @@
 "settings.section.layouts" = "Keyboard Layouts";
 "settings.section.general" = "General";
 "settings.launchAtLogin" = "Launch at login";
+"settings.switchLayout" = "Switch keyboard layout after translation";

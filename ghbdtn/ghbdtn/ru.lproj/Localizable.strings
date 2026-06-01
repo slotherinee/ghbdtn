@@ -52,3 +52,4 @@
 "settings.section.layouts" = "Раскладки клавиатуры";
 "settings.section.general" = "Основные";
 "settings.launchAtLogin" = "Запускать при входе в систему";
+"settings.switchLayout" = "Переключать раскладку после перевода";

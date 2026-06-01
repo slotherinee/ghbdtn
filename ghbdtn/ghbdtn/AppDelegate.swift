@@ -336,6 +336,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 return
             }
 
+            // Detect direction before overwriting clipboard
+            let switchLayout = UserDefaults.standard.bool(forKey: "switchLayoutAfterTranslation")
+            let ruCount = text.filter { self.ruToEn[$0] != nil }.count
+            let enCount = text.filter { self.enToRu[$0] != nil }.count
+            // enCount > ruCount → text was typed in En layout → translated to Ru → switch to Ru
+            let targetRussian = enCount >= ruCount
+
             DispatchQueue.main.sync {
                 pb.clearContents()
                 pb.setString(translated, forType: .string)
@@ -345,7 +352,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.simulateKey(keyCode: 9, flags: .maskCommand) // ⌘V
             Thread.sleep(forTimeInterval: 0.1)
 
-            DispatchQueue.main.async { self.restoreClipboard(savedContents, pb: pb) }
+            DispatchQueue.main.async {
+                self.restoreClipboard(savedContents, pb: pb)
+                if switchLayout { self.switchInputSource(toRussian: targetRussian) }
+            }
         }
     }
 
@@ -361,6 +371,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         dn?.flags = flags; up?.flags = flags
         dn?.post(tap: .cghidEventTap)
         up?.post(tap: .cghidEventTap)
+    }
+
+    // MARK: - Input Source Switch
+
+    private func switchInputSource(toRussian: Bool) {
+        let targetLang = toRussian ? "ru" : "en"
+        let filter = [kTISPropertyInputSourceType: kTISTypeKeyboardLayout] as CFDictionary
+        guard let raw = TISCreateInputSourceList(filter, false) else { return }
+        let list = raw.takeRetainedValue() as! [TISInputSource]
+        for source in list {
+            guard let ptr = TISGetInputSourceProperty(source, kTISPropertyInputSourceLanguages) else { continue }
+            let langs = Unmanaged<CFArray>.fromOpaque(ptr).takeUnretainedValue() as! [String]
+            if langs.contains(targetLang) {
+                TISSelectInputSource(source)
+                return
+            }
+        }
     }
 
     // Per-character bidirectional translation

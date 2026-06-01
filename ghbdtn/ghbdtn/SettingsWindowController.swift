@@ -7,10 +7,11 @@ class SettingsWindowController: NSWindowController, NSWindowDelegate {
 
     private var hotkeyTypePopup: NSPopUpButton!
     private var launchAtLoginCheckbox: NSButton!
+    private var switchLayoutCheckbox: NSButton!
 
     convenience init() {
         let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 400, height: 252),
+            contentRect: NSRect(x: 0, y: 0, width: 400, height: 278),
             styleMask: [.titled, .closable],
             backing: .buffered,
             defer: false
@@ -45,6 +46,14 @@ class SettingsWindowController: NSWindowController, NSWindowDelegate {
         )
         launchAtLoginCheckbox.frame = NSRect(x: 16, y: y, width: 350, height: 20)
         cv.addSubview(launchAtLoginCheckbox)
+        y += 28
+
+        switchLayoutCheckbox = NSButton(
+            checkboxWithTitle: L("settings.switchLayout"),
+            target: self, action: #selector(toggleSwitchLayout)
+        )
+        switchLayoutCheckbox.frame = NSRect(x: 16, y: y, width: 350, height: 20)
+        cv.addSubview(switchLayoutCheckbox)
         y += 34
         addSectionHeader(L("settings.section.general"), to: cv, y: y); y += 28
 
@@ -119,6 +128,7 @@ class SettingsWindowController: NSWindowController, NSWindowDelegate {
 
     private func applyPersistedSettings() {
         updateLaunchAtLoginCheckbox()
+        switchLayoutCheckbox.state = UserDefaults.standard.bool(forKey: "switchLayoutAfterTranslation") ? .on : .off
         let config = HotkeyConfig.load()
         switch config.kind {
         case .doubleTapControl: hotkeyTypePopup.selectItem(at: 0)
@@ -126,6 +136,10 @@ class SettingsWindowController: NSWindowController, NSWindowDelegate {
         case .optionSpace:      hotkeyTypePopup.selectItem(at: 2)
         }
         updateHotkeyHint()
+    }
+
+    @objc private func toggleSwitchLayout() {
+        UserDefaults.standard.set(switchLayoutCheckbox.state == .on, forKey: "switchLayoutAfterTranslation")
     }
 
     // MARK: - Launch at Login
