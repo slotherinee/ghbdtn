@@ -10,7 +10,7 @@ class SettingsWindowController: NSWindowController, NSWindowDelegate {
 
     convenience init() {
         let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 400, height: 220),
+            contentRect: NSRect(x: 0, y: 0, width: 400, height: 230),
             styleMask: [.titled, .closable],
             backing: .buffered,
             defer: false
@@ -30,7 +30,7 @@ class SettingsWindowController: NSWindowController, NSWindowDelegate {
         guard let cv = window?.contentView else { return }
         var y: CGFloat = 16
 
-        // Save button
+        // Save button (bottom)
         let saveBtn = NSButton(title: L("button.save"), target: self, action: #selector(save))
         saveBtn.bezelStyle = .rounded
         saveBtn.frame = NSRect(x: 294, y: y, width: 90, height: 28)
@@ -38,21 +38,20 @@ class SettingsWindowController: NSWindowController, NSWindowDelegate {
         cv.addSubview(saveBtn)
         y += 50
 
-        // ── General ──────────────────────────────────────────────
-        addSectionHeader(L("settings.section.general"), to: cv, y: y); y += 28
-
+        // ── General section — content first, header on top ───────
         launchAtLoginCheckbox = NSButton(
             checkboxWithTitle: L("settings.launchAtLogin"),
             target: self, action: #selector(toggleLaunchAtLogin)
         )
         launchAtLoginCheckbox.frame = NSRect(x: 16, y: y, width: 350, height: 20)
         cv.addSubview(launchAtLoginCheckbox)
-        y += 38
+        y += 34
+        addSectionHeader(L("settings.section.general"), to: cv, y: y); y += 28
 
-        // ── Hotkey ──────────────────────────────────────────────
+        // ── Separator ────────────────────────────────────────────
         addSeparator(to: cv, y: y); y += 14
-        addSectionHeader(L("settings.section.hotkey"), to: cv, y: y); y += 28
 
+        // ── Hotkey section — content first, header on top ────────
         addLabel(L("settings.hotkey.trigger"), to: cv, frame: NSRect(x: 16, y: y + 3, width: 110, height: 18))
         hotkeyTypePopup = NSPopUpButton(frame: NSRect(x: 134, y: y, width: 250, height: 26))
         hotkeyTypePopup.addItems(withTitles: [
@@ -61,6 +60,8 @@ class SettingsWindowController: NSWindowController, NSWindowDelegate {
             L("hotkey.optionSpace")
         ])
         cv.addSubview(hotkeyTypePopup)
+        y += 38
+        addSectionHeader(L("settings.section.hotkey"), to: cv, y: y)
     }
 
     // MARK: - Helpers
