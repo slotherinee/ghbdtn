@@ -15,6 +15,7 @@
 		7287205A485F44798C6E0005 /* menubar-icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 7287205A485F44798C6E0015 /* menubar-icon.svg */; };
 		7287205A485F44798C6E0007 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7287205A485F44798C6E0017 /* Localizable.strings */; };
 		7287205A485F44798C6E0008 /* OnboardingWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7287205A485F44798C6E001A /* OnboardingWindowController.swift */; };
+		7287205A485F44798C6E001B /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7287205A485F44798C6E001C /* AppIcon.icns */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		7287205A485F44798C6E0015 /* menubar-icon.svg */ = {isa = PBXFileReference; lastKnownFileType = image.svg; path = menubar-icon.svg; sourceTree = "<group>"; };
 		7287205A485F44798C6E0016 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		7287205A485F44798C6E001A /* OnboardingWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWindowController.swift; sourceTree = "<group>"; };
+		7287205A485F44798C6E001C /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
 		7287205A485F44798C6E0018 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7287205A485F44798C6E0019 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -56,6 +58,7 @@
 		7287205A485F44798C6E0030 /* ghbdtn */ = {
 			isa = PBXGroup;
 			children = (
+				7287205A485F44798C6E001C /* AppIcon.icns */,
 				7287205A485F44798C6E0016 /* main.swift */,
 				7287205A485F44798C6E0011 /* AppDelegate.swift */,
 				7287205A485F44798C6E0012 /* SettingsWindowController.swift */,
@@ -144,6 +147,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7287205A485F44798C6E001B /* AppIcon.icns in Resources */,
 				7287205A485F44798C6E0003 /* Assets.xcassets in Resources */,
 				7287205A485F44798C6E0005 /* menubar-icon.svg in Resources */,
 				7287205A485F44798C6E0007 /* Localizable.strings in Resources */,
@@ -287,7 +291,7 @@
 		7287205A485F44798C6E0072 /* Debug Target */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ghbdtn/ghbdtn.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -307,7 +311,7 @@
 		7287205A485F44798C6E0073 /* Release Target */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ghbdtn/ghbdtn.entitlements;
 				CODE_SIGN_STYLE = Automatic;
