@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" width="18" height="18">
+  <!-- Key body -->
+  <rect x="1.5" y="3.5" width="15" height="11" rx="2" ry="2"
+        fill="none" stroke="black" stroke-width="1.5"/>
+  <!-- Bidirectional arrow -->
+  <path d="M4 9 L6.5 7 L6.5 8.3 L11.5 8.3 L11.5 7 L14 9 L11.5 11 L11.5 9.7 L6.5 9.7 L6.5 11 Z"
+        fill="black"/>
+</svg>

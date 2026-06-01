@@ -1,0 +1,53 @@
+/* Menu */
+"menu.settings" = "Настройки…";
+"menu.quit" = "Выйти из ghbdtn";
+
+/* Accessibility alert */
+"accessibility.title" = "Требуется доступ к Специальным возможностям";
+"accessibility.message" = "ghbdtn нужен доступ к Специальным возможностям для отслеживания глобального хоткея и эмуляции ⌘C / ⌘V при замене текста.\n\nВключите в Системных настройках → Конфиденциальность и безопасность → Специальные возможности.";
+"button.openSystemSettings" = "Открыть Системные настройки";
+"button.later" = "Позже";
+
+/* Layouts alert */
+"layouts.insufficient.title" = "Недостаточно раскладок клавиатуры";
+"layouts.insufficient.message" = "ghbdtn требует как минимум 2 раскладки клавиатуры в Системных настройках → Клавиатура → Источники ввода.";
+"button.ok" = "ОК";
+
+/* Onboarding */
+"onboarding.next" = "Далее";
+"onboarding.back" = "Назад";
+"onboarding.start" = "Начать";
+"onboarding.skip" = "Пропустить";
+"onboarding.welcome.title" = "Добро пожаловать";
+"onboarding.welcome.subtitle" = "Исправляет текст, набранный не в той раскладке";
+"onboarding.welcome.tagline" = "Выдели текст  →  нажми хоткей  →  готово";
+"onboarding.how.title" = "Как это работает";
+"onboarding.how.step1" = "Набрано в неправильной раскладке";
+"onboarding.how.step2" = "Правильный текст, готов к использованию";
+"onboarding.how.note" = "Работает со смешанным текстом — каждый символ переводится независимо";
+"onboarding.permission.title" = "Специальные возможности";
+"onboarding.permission.desc" = "ghbdtn нужен доступ к Специальным возможностям для распознавания хоткея и замены текста через ⌘C / ⌘V. Без него приложение не работает.";
+"onboarding.permission.granted" = "Доступ разрешён";
+
+/* Hotkey recorder */
+"recorder.placeholder" = "Нажмите чтобы записать…";
+"recorder.hint" = "Esc — отмена";
+
+/* Settings window */
+"settings.title" = "Настройки ghbdtn";
+"button.save" = "Сохранить";
+"settings.section.hotkey" = "Горячая клавиша";
+"settings.hotkey.trigger" = "Сочетание:";
+"hotkey.doubleControl" = "Двойной ⌃ Control";
+"hotkey.optionSpace" = "⌥ Option + Пробел";
+"hotkey.custom" = "Другое…";
+"recorder.recording" = "Нажмите сочетание…";
+"settings.section.toggleMode" = "Режим переключения";
+"settings.mode.label" = "Режим:";
+"mode.pair" = "Между двумя раскладками";
+"mode.cycle" = "Циклически по выбранным";
+"settings.source.label" = "Источник:";
+"settings.target.label" = "Цель:";
+"settings.section.layouts" = "Раскладки клавиатуры";
+"settings.section.general" = "Основные";
+"settings.launchAtLogin" = "Запускать при входе в систему";

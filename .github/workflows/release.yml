@@ -1,0 +1,70 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app
+
+      - name: Build
+        run: |
+          xcodebuild \
+            -project ghbdtn/ghbdtn.xcodeproj \
+            -scheme ghbdtn \
+            -configuration Release \
+            -derivedDataPath build \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            | xcpretty || true
+
+      - name: Create DMG
+        run: |
+          APP="build/Build/Products/Release/ghbdtn.app"
+          VERSION="${{ github.ref_name }}"
+          DMG="ghbdtn-${VERSION}.dmg"
+
+          # Staging dir with app + Applications symlink
+          STAGING="$(mktemp -d)/ghbdtn"
+          mkdir "$STAGING"
+          cp -r "$APP" "$STAGING/"
+          ln -s /Applications "$STAGING/Applications"
+
+          hdiutil create \
+            -volname "ghbdtn ${VERSION}" \
+            -srcfolder "$STAGING" \
+            -ov \
+            -format UDZO \
+            -imagekey zlib-level=9 \
+            "$DMG"
+
+          echo "DMG_PATH=$DMG" >> $GITHUB_ENV
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.DMG_PATH }}
+          generate_release_notes: true
+          name: "ghbdtn ${{ github.ref_name }}"
+          body: |
+            ## Установка / Installation
+
+            1. Скачай `ghbdtn-${{ github.ref_name }}.dmg` / Download the `.dmg`
+            2. Открой DMG, перетащи `ghbdtn.app` в папку **Applications** / Open DMG, drag `ghbdtn.app` to **Applications**
+            3. При первом запуске macOS может заблокировать приложение — см. ниже / On first launch macOS may block the app — see below
+
+            > **Если пишет «Не удалось открыть»:** Системные настройки → Конфиденциальность и безопасность → пролистай вниз → **«Всё равно открыть»**
+            >
+            > **If macOS says it can't be opened:** System Settings → Privacy & Security → scroll down → **"Open Anyway"**
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

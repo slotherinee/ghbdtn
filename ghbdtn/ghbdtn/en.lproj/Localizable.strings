@@ -1,0 +1,53 @@
+/* Menu */
+"menu.settings" = "Settings…";
+"menu.quit" = "Quit ghbdtn";
+
+/* Accessibility alert */
+"accessibility.title" = "Accessibility Permission Required";
+"accessibility.message" = "ghbdtn needs Accessibility access to detect the global hotkey and simulate ⌘C / ⌘V to replace selected text.\n\nEnable it in System Settings → Privacy & Security → Accessibility.";
+"button.openSystemSettings" = "Open System Settings";
+"button.later" = "Later";
+
+/* Layouts alert */
+"layouts.insufficient.title" = "Not Enough Keyboard Layouts";
+"layouts.insufficient.message" = "ghbdtn requires at least 2 keyboard layouts in System Settings → Keyboard → Input Sources.";
+"button.ok" = "OK";
+
+/* Onboarding */
+"onboarding.next" = "Next";
+"onboarding.back" = "Back";
+"onboarding.start" = "Get Started";
+"onboarding.skip" = "Skip";
+"onboarding.welcome.title" = "Welcome to ghbdtn";
+"onboarding.welcome.subtitle" = "Fix text typed in the wrong keyboard layout";
+"onboarding.welcome.tagline" = "Select text  →  press hotkey  →  done";
+"onboarding.how.title" = "How it works";
+"onboarding.how.step1" = "Typed in the wrong layout";
+"onboarding.how.step2" = "Correct text, ready to use";
+"onboarding.how.note" = "Works with mixed text too — each character is translated independently";
+"onboarding.permission.title" = "Accessibility Permission";
+"onboarding.permission.desc" = "ghbdtn needs Accessibility access to detect your hotkey and replace text using ⌘C / ⌘V. Without it, the app won't work.";
+"onboarding.permission.granted" = "Access granted";
+
+/* Hotkey recorder */
+"recorder.placeholder" = "Click to record…";
+"recorder.hint" = "Esc to cancel";
+
+/* Settings window */
+"settings.title" = "ghbdtn Settings";
+"button.save" = "Save";
+"settings.section.hotkey" = "Hotkey";
+"settings.hotkey.trigger" = "Trigger:";
+"hotkey.doubleControl" = "Double ⌃ Control";
+"hotkey.optionSpace" = "⌥ Option + Space";
+"hotkey.custom" = "Custom…";
+"recorder.recording" = "Press shortcut…";
+"settings.section.toggleMode" = "Toggle Mode";
+"settings.mode.label" = "Mode:";
+"mode.pair" = "Between two layouts";
+"mode.cycle" = "Cycle through selected";
+"settings.source.label" = "Source:";
+"settings.target.label" = "Target:";
+"settings.section.layouts" = "Keyboard Layouts";
+"settings.section.general" = "General";
+"settings.launchAtLogin" = "Launch at login";
